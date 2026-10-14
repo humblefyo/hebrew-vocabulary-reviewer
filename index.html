@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hebrew Vocabulary Reviewer</title>
+<style>
+:root{color-scheme:light;--paper:#f6f4ed;--surface:#fffefa;--ink:#222c2b;--muted:#687471;--line:#d9ddd4;--accent:#376b5d;--soft:#e8efe9;--gold:#b9873b;--wrong:#a4443c;--shadow:0 18px 50px #26352c12}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif;min-height:100vh}.shell{max-width:1050px;margin:auto;padding:36px 26px 60px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;border-bottom:1px solid var(--line);padding-bottom:21px}.eyebrow{font:700 11px/1.3 Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}h1{font-size:clamp(30px,4vw,46px);font-weight:500;letter-spacing:-.04em;margin:7px 0 4px}.subtitle{font:14px/1.5 Arial,sans-serif;color:var(--muted)}.counter{font:12px Arial,sans-serif;color:var(--muted);white-space:nowrap;padding-top:8px}.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;padding-top:26px}.controls{display:flex;flex-direction:column;gap:17px}.group{border-bottom:1px solid var(--line);padding-bottom:16px}.label{display:block;font:700 10px Arial,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}.select,.search{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:11px 12px;color:var(--ink);font:14px Arial,sans-serif}.search{margin-top:7px}.row{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);border-radius:999px;background:transparent;padding:8px 11px;font:12px Arial,sans-serif;color:var(--ink);cursor:pointer}.chip[aria-pressed=true]{background:var(--soft);border-color:#aac2b4;color:#234d3f}.btn{border:1px solid var(--line);border-radius:9px;background:var(--surface);padding:11px 13px;font:600 13px Arial,sans-serif;color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s,transform .15s}.btn:hover{border-color:#94aa9e;background:#f3f6f0}.btn:active{transform:translateY(1px)}.btn.primary{background:var(--accent);color:white;border-color:var(--accent)}.btn.primary:hover{background:#2c584d}.btn.wide{width:100%}.cardarea{min-width:0}.progressline{height:4px;background:#e1e4dc;border-radius:5px;overflow:hidden;margin-bottom:16px}.progressline span{height:100%;width:0;display:block;background:var(--accent);transition:width .25s}.card{background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);min-height:370px;padding:30px 36px 24px;display:flex;flex-direction:column;position:relative}.cardtop{display:flex;justify-content:space-between;align-items:center;font:11px Arial,sans-serif;color:var(--muted)}.tag{border:1px solid var(--line);border-radius:999px;padding:5px 9px}.prompt{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:34px 8px 24px;gap:15px}.prompt .term{font-size:clamp(34px,5.4vw,62px);line-height:1.35;letter-spacing:.01em;direction:rtl}.prompt .hint{font:12px Arial,sans-serif;color:var(--muted)}.answer{border-top:1px solid var(--line);padding:19px 5px 0;text-align:center;animation:rise .2s ease}.answer[hidden]{display:none}.answer .translation{font-size:clamp(21px,3vw,30px);line-height:1.45}.answer .label{margin:0 0 7px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}.actions .reveal{grid-column:1/-1}.actions[hidden]{display:none}.cardbottom{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font:12px Arial,sans-serif;color:var(--muted)}.nav{display:flex;gap:8px}.empty{min-height:300px;display:grid;place-items:center;text-align:center;color:var(--muted);font:15px/1.6 Arial,sans-serif}.status{min-height:18px;margin-top:9px;font:12px Arial,sans-serif;color:var(--muted);text-align:center}.status.good{color:var(--accent)}.status.bad{color:var(--wrong)}.helper{font:12px/1.6 Arial,sans-serif;color:var(--muted);margin:12px 0 0}.reset{border:0;background:none;color:var(--muted);text-decoration:underline;text-underline-offset:3px;font:12px Arial,sans-serif;cursor:pointer;padding:4px 0}.foot{margin-top:24px;border-top:1px solid var(--line);padding-top:15px;font:11px/1.6 Arial,sans-serif;color:var(--muted)}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #8ab19b;outline-offset:2px}@keyframes rise{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}@media(max-width:760px){.shell{padding:23px 16px 40px}.layout{grid-template-columns:1fr;gap:20px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}.group{padding-bottom:10px}.group.searchgroup{grid-column:1/-1}.card{min-height:340px;padding:23px 20px 20px}.counter{font-size:11px}}@media(max-width:420px){.controls{grid-template-columns:1fr}.group.searchgroup{grid-column:auto}.top{gap:8px}.actions{grid-template-columns:1fr}.actions .reveal{grid-column:auto}}
+</style>
+</head>
+<body><main class="shell">
+<header class="top"><div><div class="eyebrow">Hebrew · Vocabulary practice</div><h1>Recall the word.</h1><div class="subtitle">A quiet, self-paced reviewer made from your vocabulary list.</div></div><div class="counter" id="overall"></div></header>
+<div class="layout"><aside class="controls" aria-label="Reviewer settings">
+<div class="group"><span class="label">Study set</span><select id="set" class="select"></select></div>
+<div class="group"><span class="label">Ask me</span><div class="row" id="direction"><button class="chip" data-mode="he-en" aria-pressed="true">Hebrew → English</button><button class="chip" data-mode="en-he" aria-pressed="false">English → Hebrew</button></div></div>
+<div class="group"><span class="label">Session</span><button class="btn wide" id="shuffle">Shuffle this set</button><p class="helper">Use “Know it” or “Review again” to keep track as you go.</p></div>
+<div class="group searchgroup"><label class="label" for="search">Find a word</label><input id="search" class="search" type="search" placeholder="Hebrew or English…" autocomplete="off"></div>
+<div class="group"><span class="label">Progress</span><div class="row"><button class="chip" data-filter="all" aria-pressed="true">All</button><button class="chip" data-filter="unseen" aria-pressed="false">Unseen</button><button class="chip" data-filter="again" aria-pressed="false">Review again</button><button class="chip" data-filter="known" aria-pressed="false">Known</button></div><button class="reset" id="reset">Reset saved progress</button></div>
+</aside><section class="cardarea" aria-live="polite"><div class="progressline"><span id="bar"></span></div><div id="content"></div><div class="foot">Keyboard: <b>Space</b> reveal · <b>← / →</b> previous/next · <b>K</b> know it · <b>R</b> review again. Your progress stays in this browser.</div></section></div>
+</main>
+<script>
+const particleRaw = `
+אֵת, אֶת|sign of definite direct object
+אֵת|with, near
+בְּ|in, by, with, from, against
+הַ־|the (definite article)
+הֲ־|interrogative particle
+וְ|and, but, then, or
+כְּ|as, like
+לְ|to, for, of
+מִן|from, out of, of, than
+שֶׁ־|who, which, that`;
+const vocabRaw = `
+יהוה|The LORD
+כֹּל|all, every, any
+אֲשֶׁר|who, whom, which, that
+אֶל|to, toward, into, at
+אָמַר|Q: say, command
+לֹא|not
+בֵּן|son, youth
+עַל|on, upon, concerning, on account of, against
+כִּי|for, that, because, when, but
+הָיָה|Q: happen, become, be; N: be done, come to pass
+עָשָׂה|Q: make, do; N: be done, be made
+אֱלֹהִים|God, gods
+בּוֹא|Q: enter, come; H: bring, bring in
+מֶלֶךְ|king
+יִשְׂרָאֵל|Israel
+אֶרֶץ|earth, land, country
+יוֹם|day
+אִישׁ|man, husband, each
+פָּנִים|face, appearance, presence
+בַּיִת|house, dwelling, temple
+נָתַן|Q: give, put, set, permit
+עַם|people
+יָד|hand, strength
+הָלַךְ|Q: go, walk; H: lead, bring; Ht: walk, walk about
+דָּבָר|word, thing, affair
+הוּא|he, that one, that
+רָאָה|Q: see, look at; N: appear, be seen; H: show, cause to see
+עַד|as far as, until, while
+אָב|father, ancestor
+שָׁמַע|Q: hear, listen to, obey; H: proclaim, announce
+דָּבָר|P: speak
+זֶה|this one, this
+עִיר|town, city
+יָשַׁב|Q: sit, remain, dwell; H: set, place, cause to dwell
+יָצָא|Q: go forth, come out; H: bring out, take out
+דָּוִד|David
+שׁוּב|Q: turn back, return; P: bring back, restore; H: bring back, turn back
+הִנֵּה הֵן|behold, lo, see, here, now, look
+עִם|with, beside
+לָקַח|Q: take, receive; N: be taken
+אֶחָד|one, first, once, each
+יָדַע|Q: know; N: be known; P: cause to know; H: make known, declare
+אִם|if
+עָלָה|Q: go up, ascend; H: bring up, offer; N: be brought up, taken away
+שָׁנָה|year
+שֵׁם|name, fame
+אֲנִי|I
+עַיִן|eye, spring
+שָׁלַח|Q: send; P: send forth, send away
+מוּת|Q: die; H: kill, execute
+יְהוּדָה|Judah
+שָׁם|there
+אָכַל|Q: eat, consume; N: be eaten; H: feed, cause to eat
+עֶבֶד|slave, servant
+אִשָּׁה|woman, wife
+שְׁנַיִם / שְׁתַּיִם|two (masculine / feminine)
+גַּם|moreover, also, even
+מֹשֶׁה|Moses
+נֶפֶשׁ|self, person, life
+אַיִן|is not, are not
+אָדוֹן / אֲדֹנָי|master, lord / LORD
+כֹּהֵן|priest
+אֵלֶּה|these
+מָה|what? how?
+אַתָּה|you (masculine singular)
+קָרָא|Q: call, proclaim; N: be called
+אַחַר|behind, after
+אַל|not
+דֶּרֶךְ|way, road, manner
+כֵּן|thus, so
+מִצְרַיִם|Egypt
+רָעָה|evil, distress, harm
+נָשָׂא|Q: lift, carry, take; N: be lifted up, rise; P: lift, take up; Ht: lift oneself up
+יְרוּשָׁלַם|Jerusalem
+אָח|brother
+קוּם|Q: arise, stand; P: confirm; H: raise, set up
+לֵב|heart, mind, will
+רֹאשׁ|head, chief, top
+בַּת|daughter
+מֵאָה|hundred
+זֹאת|this one, this (feminine)
+שִׂים|Q: put, place, set
+מַיִם|water, waters
+כֹּה|thus, here
+גּוֹי|nation
+אָדָם|man, humankind, Adam
+הַר|mountain, hill
+עָבַר|Q: pass over, pass by; H: cause to pass over
+עֶשֶׂר|ten (masculine)
+עֶשְׂרֵה|ten (feminine)
+עָמַד|Q: stand, stop, take one’s stand; H: erect, make stand
+הֵם, הֵמָּה|they, those (masculine)
+קוֹל|voice, sound
+נָכָה|H: smite, strike
+יָלַד|Q: bear, give birth to; H: beget, father
+אֶלֶף|thousand, military unit
+תַּחַת|under, below, in place of
+חַי|alive, living (adjective)
+עוֹד|still, yet, again
+פֶּה|mouth
+צָבָא|army, warfare, host
+צִוָּה|P: charge, command
+הִיא|she, that
+קֹדֶשׁ|sacredness, holiness
+שָׁמַר|Q: keep watch, preserve; N: be on guard, be guarded
+מָצָא|Q: find, reach, attain to; N: be found, be left; H: present, bring into contact
+עוֹלָם|eternity, antiquity
+עַתָּה|now
+נָפַל|Q: fall, lie; H: fell, cause to fall
+שָׁלֹשׁ / שְׁלֹשָׁה|three (masculine / feminine)
+רַב|much, many, great
+מִי|who? whoever?
+מִשְׁפָּט|justice, judgment, custom, manner, norm
+שָׁמַיִם|heaven(s), sky
+שַׂר|ruler, chieftain
+תּוֹךְ|midst, middle
+חֶרֶב|sword
+שָׁאוּל|Saul
+כֶּסֶף|silver, money
+נָא|please, now
+מִזְבֵּחַ|altar
+מָקוֹם|place
+שֶׁבַע / שִׁבְעָה|seven (masculine / feminine)
+יָם|sea; west
+זָהָב|gold
+יָרַד|Q: go down, descend; H: bring down
+יָרֵא|Q: fear, be awed; N: be awe-inspiring
+רוּחַ|wind, spirit, breath
+אֵשׁ|fire
+נְאֻם|utterance, oracle
+בָּנָה|Q: build; N: be built
+שַׁעַר|gate
+נָגַד|H: declare, tell, inform
+דָּם|blood
+אָנֹכִי|I
+יַעֲקֹב|Jacob
+אַהֲרֹן|Aaron
+מָלַךְ|Q: reign, rule, be king; H: make king, cause to rule
+אֹהֶל|tent
+חָמֵשׁ / חֲמִשָּׁה|five (masculine / feminine)
+טוֹב|benefit (noun); good, pleasant (adjective)
+סָבִיב|round about, circuit, surrounding
+עֵץ|trees, wood
+בָּרַךְ|Q: kneel, bless; N: bless oneself; P: bless; Ht: bless oneself
+כְּלִי|vessel, utensil, article of a general sort
+אוֹ|or
+מִלְחָמָה|battle, war
+שָׂדֶה|field, country
+אַרְבָּעָה / אַרְבַּע|four (masculine / feminine)
+עָנָה|Q: answer, respond
+עֶשְׂרִים|twenty
+נָבִיא|prophet
+מִשְׁפָּחָה|clan, family
+פָּקַד|Q: visit, attend to, observe; N: be missing, be visited; P: muster; H: appoint, deposit
+סוּר|Q: depart from, turn aside; H: take away, remove
+מְאֹד|very, exceedingly; strength
+עֵת|time, season
+לֶחֶם|bread, food
+חַטָּאת|sin, sin offering
+שְׁלֹמֹה|Solomon
+חָזַק|Q: be or grow strong, be firm; P: strengthen, harden; H: strengthen, seize; Ht: strengthen oneself
+כָּרַת|Q: cut off or down, make a covenant; N: be cut off or down; H: cut off, destroy
+לֵוִי|Levi, Levite
+עָבַד|Q: work, serve; H: compel to labor
+פְּלִשְׁתִּי|Philistine
+עֹלָה|burnt offering
+בְּרִית|covenant, agreement
+אֹיֵב|Q: be hostile to, treat as an enemy (participle)
+חָיָה|Q: live; P: preserve, revive; H: preserve, revive
+חֹדֶשׁ|month, new moon
+קָרַב|Q: draw near, approach; P: bring near; H: bring, bring near
+אַתֶּם|you (masculine plural)
+אַף|anger, nostril, nose
+פַּרְעֹה|Pharaoh
+אֶבֶן|stone
+צֹאן|flock (sheep and goats)
+לְמַעַן|for the sake of, in order that, on account of
+מִדְבָּר|wilderness, plain
+בָּשָׂר|flesh, meat
+רָשָׁע|wicked, guilty
+בָּבֶל|Babel, Babylon
+בֵּין|between
+לֵבָב|heart, mind, will
+מַטֶּה|rod, staff, tribe
+מָלֵא|Q: be full, fill; N: be filled; P: fill, complete
+חֶסֶד|kindness, goodness
+יְהוֹשֻׁעַ|Joshua
+רֶגֶל|foot
+אַמָּה|cubit
+חַיִל|strength, wealth, army
+לַיְלָה|night
+אֵל|El, God, god
+גְּבוּל|border, boundary, territory
+נַעַר|boy, youth, servant
+חָטָא|Q: sin, miss; P: purify, make a sin offering; H: cause to sin
+שָׁלוֹם|welfare, peace, wholeness
+מַעֲשֶׂה|deed, work
+זָכַר|Q: remember, call to mind; N: be remembered; H: remind, cause to remember
+יָרַשׁ|Q: take possession of, inherit; H: inherit, dispossess
+עָוֹן|sin, guilt, punishment
+קֶרֶב|midst, among, inward part
+זֶרַע|seed, offspring
+רָבָה|Q: be or become many, much; H: make many, great
+אֲדָמָה|ground, land
+בִּקֵּשׁ|P: seek, desire
+נַחֲלָה|property, share, inheritance
+כָּתַב|Q: write; N: be written
+מוֹעֵד|appointed time, place, or meeting
+אֵם|mother
+תּוֹרָה|Torah, teaching, law
+כּוּן|N: be established, ready; H: establish, prepare
+שָׁתָה|Q: drink
+אָהַב|Q: love
+שֵׁשׁ / שִׁשָּׁה|six (masculine / feminine)
+נָטָה|Q: stretch out, extend; H: turn aside, incline, pervert justice
+בֹּקֶר|morning
+יָסַף|Q: add; H: add to, increase, do again
+מַחֲנֶה|camp, encampment
+מַלְאָךְ|messenger, angel
+עָזַב|Q: leave, abandon; N: be forsaken
+יוֹסֵף|Joseph
+נָצַל|N: deliver oneself; P: strip off, plunder; H: deliver, take away
+שָׁכַב|Q: lie down
+בֶּגֶד|garment
+כָּלָה|Q: be complete, be finished; P: complete, finish
+צַדִּיק|just, righteous
+יָשַׁע|N: be liberated, saved; H: deliver, save, give victory to
+אָרוֹן|ark, chest
+אָסַף|Q: gather, remove; N: assemble, be gathered
+כָּבוֹד|glory, splendor, honor
+רוּם|Q: be high, exalted; rise; H: raise, lift up, erect
+יָכֹל|Q: be able, prevail
+כַּף|palm of hand, sole of foot
+לָכֵן|therefore
+שֶׁמֶן|oil, fat
+גָּלָה|Q: uncover, depart, go into exile; N: be uncovered, revealed; P: uncover, disclose; H: take into exile
+שֵׁבֶט|rod, staff, tribe
+אָזֶן|ear
+בְּהֵמָה|cattle, beast
+רֵעַ|friend, companion
+שָׁבַע|N: swear, take an oath; H: cause to swear
+סֵפֶר|letter
+שָׁפַט|Q: judge, govern; N: plead one’s cause, be judged
+אָבַד|Q: perish, be lost; P: destroy, kill; H: destroy, put to death
+בָּקָר|cattle, herd, ox
+יַרְדֵּן|Jordan
+רִאשׁוֹן|former, first
+מִצְוָה|commandment
+אֶפְרַיִם|Ephraim
+מוֹאָב|Moab
+זָקֵן|old man, old, elder
+שָׂפָה|lip, speech, edge
+שְׁלֹשִׁים|thirty
+חָוָה|prostrate oneself in worship
+קָדַשׁ|Q: be set apart; N: show oneself sacred; P: set apart, consecrate; Ht: purify oneself; H: consecrate
+בָּחַר|Q: choose; N: be chosen
+לָחַם|N: wage war, fight
+שָׁאַל|Q: ask, inquire
+בִּין|Q: perceive, understand; N: be intelligent; H: teach, understand, cause to understand
+דּוֹר|generation, era
+מְלָאכָה|work, business, occupation
+רָעָה|Q: pasture, tend, graze
+בִּנְיָמִין|Benjamin
+בַּעַל|Baal, owner, lord
+הָרַג|Q: kill, slay
+חוּץ|outside, street
+לָמָה|why?
+אַחֵר|another, different, other
+חֲמִשִּׁים|fifty
+פֶּתַח|doorway, opening, entrance
+דָּרַשׁ|Q: seek, consult; N: let oneself be consulted
+זֶבַח|sacrifice (noun)
+סָבַב|Q: turn around, surround; N: turn around; H: turn, cause to turn, lead around
+אַךְ|surely, only
+מָוֶת|death
+טָמֵא|Q: be or become unclean; N: defile oneself, be defiled; P: defile; Ht: defile oneself
+נוּס|Q: flee, escape
+גִּבּוֹר|warrior, mighty man
+צְדָקָה|righteousness
+שֵׁנִי / שֵׁנִית|second (masculine / feminine)
+אַיִל|ram
+לְבַד|alone, by oneself
+חָכְמָה|wisdom, skill
+צִיּוֹן|Zion
+שָׂמַח|Q: rejoice, be glad; P: gladden
+מִנְחָה|offering, gift, tribute
+צָפוֹן|north
+כָּסָה|P: cover, conceal
+כְּמוֹ|as, like, when
+נֶגֶד|in front of, opposite
+רֹב|multitude, abundance
+שָׁחַת|P: spoil, ruin, corrupt; H: spoil, ruin, corrupt
+נָגַע|Q: touch, harm, reach; H: cause to touch or reach
+אֲרָם|Aram (Syria)
+אַשּׁוּר|Ashur (Assyria)
+עֵדָה|congregation, gathering
+שָׁבַר|Q: break; N: be broken; P: break, shatter
+יִרְמְיָהוּ|Jeremiah
+נָסַע|Q: set out, journey; H: lead out
+חָצֵר|court, enclosure
+יוֹאָב|Joab
+עֲבֹדָה|labor, service
+שָׂנֵא|Q: hate; P: hate
+אָז|at that time, then
+חָנָה|Q: encamp
+נוּחַ|Q: rest, be quiet; H: give rest to, leave
+פָּתַח|Q: be open; N: be opened; P: set free, open, loosen
+הָלַל|P: praise; Ht: glory, boast
+יַיִן|wine
+רָדַף|Q: pursue, persecute; P: pursue vigorously
+מַעַל|upward, above
+שְׁמוּאֵל|Samuel
+מִשְׁכָּן|tabernacle, dwelling
+יָחַד / יַחְדָּו|be united; together (adverb)
+נַחַל|stream, wadi, torrent
+סוּס|horse
+חָכָם|wise, skillful, clever
+יָמִין|right hand
+יֵשׁ|there is, there are
+נְחֹשֶׁת|copper, bronze
+קָרָא / לִקְרָאת|Q: meet, encounter, befall; infinitive form of קָרָא
+אַרְבָּעִים|forty
+מְנַשֶּׁה|Manasseh
+פָּנָה|Q: turn, look; P: turn away, clear away; H: turn
+גִּלְעָד|Gilead
+זָבַח|Q: slaughter, sacrifice; P: sacrifice
+חוֹמָה|wall
+כִּסֵּא|throne, seat
+מִסְפָּר|number
+פֶּן|lest
+שָׁאַר|N: be left over, behind; H: leave over, spare
+שֶׁמֶשׁ|sun
+אַף|also, indeed, even
+פַּר|bull, young bull
+קָבַר|Q: bury; N: be buried
+חִזְקִיָּהוּ|Hezekiah
+עֶרֶב|sunset, evening
+שָׁכַן|Q: dwell, tent; P: establish, settle; H: place, cause to dwell
+חָלַל|P: defile, profane, pollute; H: begin
+נָשִׂיא|chief, prince
+חֹק|statute, ordinance
+כֹּחַ|strength, power
+קָבַץ|Q: gather, collect; N: assemble, be gathered; P: gather together
+אֱמֶת|faithfulness, truth, stability
+נָגַשׁ|Q: draw near, approach; N: draw near; H: bring near
+עֶצֶם|bone, substance, self
+שָׁלַךְ|Q: throw, cast; H: throw, cast
+חָשַׁב|Q: think, account, plan; N: be reckoned; P: consider, devise
+יְהוֹנָתָן|Jonathan
+חֲצִי|half, middle
+קָהָל|assembly, congregation
+בְּכוֹר|first-born
+אוֹר|light
+אֲנַחְנוּ|we
+חֵמָה|heat, rage, fury
+בָּטַח|Q: trust, be confident
+לָכַד|Q: capture, seize; N: be captured, caught
+נָהָר|river, stream
+רֶכֶב|chariot, chariotry
+יָשָׁר|upright, just, straight (adjective)
+פְּרִי|fruit
+אָמַן|N: be confirmed, faithful; H: trust, believe
+חַיָּה|living being, animal
+פַּעַם|time, occurrence, foot
+צֶדֶק|righteousness, rightness
+לָשׁוֹן|tongue, language
+שָׂרַף|Q: burn; N: be burned
+תּוֹעֵבָה|abomination
+מַמְלָכָה|kingdom, dominion
+קָדוֹשׁ|sacred, holy
+גָּדַל|Q: grow up, become great; P: raise, rear a child, make great; H: make great, magnify
+קָטַר|P: burn sacrifices, incense; H: burn sacrifices, incense
+אָחוֹת|sister
+בָּכָה|Q: weep, bewail
+יָדָה|H: give thanks, praise; Ht: confess, give thanks
+נָבָא|N: prophesy; Ht: prophesy
+בִּלְתִּי|not, except
+כָּבֵד|Q: be heavy, honored; N: be honored; P: honor, glorify; H: make heavy
+שָׁפַךְ|Q: pour out; N: be poured out
+שֶׁקֶר|lie, falsehood
+יִצְחָק|Isaac
+רַק|only, surely
+שַׁבָּת|Sabbath
+כָּפַר|P: reconcile, cover over
+לָבַשׁ|Q: dress, put on clothes; H: clothe someone
+נֶגֶב|southland, Negev
+עַמּוּד|pillar, column
+בּוֹשׁ|Q: be ashamed; H: put to shame
+כָּנָף|wing, extremity, skirt
+שְׁמֹנֶה / שְׁמֹנָה|eight (masculine / feminine)
+שֹׁמְרוֹן|Samaria
+עָפָר|dust, dirt
+שְׁלִישִׁי|third
+יָתַר|N: be left over, remain; H: leave over, leave
+כֶּבֶשׂ|lamb
+סָפַר|Q: count, number; N: be counted, numbered; P: recount, relate, tell
+נָחַם|N: be sorry, repent, be comforted; P: comfort, console
+עֳנִי / עָנִי|affliction, poor one / afflicted, poor (adjective)
+עַמּוֹן|Ammon
+צָרָה / צַר|distress, trouble / narrow
+בְּעַד|through, behind, on behalf of
+בָּמָה|high place, ridge, back
+גָּאַל|Q: redeem, act as kinsman; N: redeem oneself, be redeemed
+חֹק|statute, enactment
+יָרָבְעָם|Jeroboam
+אַבְשָׁלוֹם|Absalom
+רוּץ|Q: run
+שָׁלֵם|Q: be complete, sound; P: complete, make good, reward
+תָּמִיד|continually, daily
+יָטַב|Q: be well, be pleasing; H: do good to, make good
+מַרְאָה|sight, appearance, vision
+שָׁכַח|Q: forget; N: be forgotten
+מְעַט|a little, a few
+רֹחַב|breadth, width
+רָעָב|famine, hunger`;
+const parse=(raw,section)=>raw.trim().split(/\n/).map((line,i)=>{const [hebrew,english]=line.trim().split('|');return {id:section==='Particles'?'p'+(i+1):String(i+1),section,hebrew:hebrew.trim(),english:english.trim(),known:false,seen:false}});
+const entries=[...parse(particleRaw,'Particles'),...parse(vocabRaw,'Vocabulary')];
+const setSelect=document.querySelector('#set');
+setSelect.innerHTML='<option value="all">Full list · 425</option><option value="particles">Particles · 10</option><option value="vocab">Vocabulary · 415</option>';
+for(let batch=1,start=1;start<=415;batch++,start+=20){const end=Math.min(start+19,415);const option=document.createElement('option');option.value=`batch-${batch}`;option.textContent=`Set ${batch} · ${start}–${end}`;setSelect.appendChild(option)}
+const key='hebrew-review-progress-v1';let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch{};entries.forEach(e=>{e.known=!!saved[e.id]?.known;e.seen=!!saved[e.id]?.seen});
+let mode='he-en',filter='all',order=[],index=0,revealed=false,query='';const $=s=>document.querySelector(s);const content=$('#content');
+function save(){const x={};entries.forEach(e=>{if(e.known||e.seen)x[e.id]={known:e.known,seen:e.seen}});localStorage.setItem(key,JSON.stringify(x))}
+function base(){const set=$('#set').value;if(set==='all')return entries;if(set==='particles')return entries.filter(e=>e.section==='Particles');if(set==='vocab')return entries.filter(e=>e.section==='Vocabulary');if(set.startsWith('batch-')){const batch=Number(set.slice(6)),start=(batch-1)*20+1,end=Math.min(batch*20,415);return entries.filter(e=>e.section==='Vocabulary'&&Number(e.id)>=start&&Number(e.id)<=end)}return entries}
+function deck(){let a=base();if(query){const q=query.toLowerCase();a=a.filter(e=>(e.hebrew+' '+e.english).toLowerCase().includes(q))}if(filter==='unseen')a=a.filter(e=>!e.seen);if(filter==='again')a=a.filter(e=>e.seen&&!e.known);if(filter==='known')a=a.filter(e=>e.known);return a}
+function current(){return order[index]}
+function render(){const d=deck();if(!d.length){content.innerHTML='<div class="empty">No words match this view.<br>Choose another progress filter or clear the search.</div>';$('#bar').style.width='0';return}if(index>=d.length)index=0;const e=current();e.seen=true;save();$('#overall').textContent=`${entries.filter(x=>x.known).length} known · ${entries.filter(x=>x.seen).length} seen`;
+const front=mode==='he-en'?e.hebrew:e.english,back=mode==='he-en'?e.english:e.hebrew;
+content.innerHTML=`<article class="card"><div class="cardtop"><span class="tag">${e.section==='Particles'?'Particle':'Vocabulary'} · ${e.section==='Particles'?e.id.slice(1):e.id}</span><span>${index+1} of ${d.length}</span></div><div class="prompt"><div class="term" ${mode==='he-en'?'lang="he" dir="rtl"':''}>${esc(front)}</div><div class="hint">${mode==='he-en'?'Recall the meaning':'Recall the Hebrew'}</div></div><div class="answer" ${revealed?'':'hidden'}><div class="label">Answer</div><div class="translation" ${mode==='en-he'?'lang="he" dir="rtl"':''}>${esc(back)}</div></div><div class="actions" ${revealed?'':'hidden'}><button class="btn" id="again">Review again</button><button class="btn primary" id="know">Know it</button></div><button class="btn primary wide reveal" id="reveal" ${revealed?'hidden':''}>Show answer</button></article><div class="cardbottom"><span>${e.known?'Marked known':'Not marked yet'}</span><div class="nav"><button class="btn" id="prev" aria-label="Previous card">← Back</button><button class="btn" id="next">Next →</button></div></div><div class="status" id="status" role="status"></div>`;
+$('#bar').style.width=`${Math.round((index+1)/d.length*100)}%`;$('#reveal').onclick=()=>{revealed=true;render()};$('#know').onclick=()=>grade(true);$('#again').onclick=()=>grade(false);$('#next').onclick=()=>move(1);$('#prev').onclick=()=>move(-1)}
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function grade(known){const e=current();e.known=known;e.seen=true;save();const s=$('#status');s.textContent=known?'Saved as known.':'Saved for review.';s.className='status '+(known?'good':'bad');$('#overall').textContent=`${entries.filter(x=>x.known).length} known · ${entries.filter(x=>x.seen).length} seen`;}
+function move(n){const d=deck();if(!d.length)return;index=(index+n+d.length)%d.length;revealed=false;render()}
+function resetDeck(){order=deck();index=0;revealed=false;render()}
+$('#set').onchange=resetDeck;$('#search').oninput=e=>{query=e.target.value.trim();resetDeck()};$('#shuffle').onclick=()=>{order=deck().slice();for(let i=order.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[order[i],order[j]]=[order[j],order[i]]}index=0;revealed=false;render()};
+$('#direction').onclick=e=>{const b=e.target.closest('[data-mode]');if(!b)return;mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));revealed=false;render()};
+document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));resetDeck()});
+$('#reset').onclick=()=>{if(confirm('Clear all saved progress for this reviewer?')){entries.forEach(e=>{e.known=false;e.seen=false});save();resetDeck()}};
+document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key===' '){e.preventDefault();if(!revealed){revealed=true;render()}}else if(e.key==='ArrowRight')move(1);else if(e.key==='ArrowLeft')move(-1);else if(revealed&&(e.key.toLowerCase()==='k'||e.key.toLowerCase()==='r'))grade(e.key.toLowerCase()==='k')});
+resetDeck();
+</script></body></html>
